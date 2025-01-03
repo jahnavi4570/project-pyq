@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: lightblue;
+            border: 2px solid darkblue;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 1s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: rgb(1, 1, 5);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: rgb(1, 1, 7);
+        }
+
+        input {
+            width: calc(100% - 40px);
+            padding: 10px;
+            border: 2px solid darkblue;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        input:focus {
+            border-color: #007BFF;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .eye-icon {
+            display: inline-block;
+            cursor: pointer;
+            margin-left: -35px;
+            margin-top: 12px;
+            position: relative;
+        }
+
+        .btn {
+            background-color: darkblue;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            width: 100%;
+            background-color: darkblue;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 14px;
+            position: relative;
+            bottom: 0;
+            height: 50px;
+            margin-top: auto; /* Push the footer to the bottom */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            input {
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 10px;
+            }
+
+            footer {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign In</h1>
+        <form id="signInForm">
+            <div class="form-group">
+                <label for="email">Email ID:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div style="position: relative;">
+                    <input type="password" id="password" required>
+                    <span class="eye-icon" id="togglePassword">👁️</span>
+                </div>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 MLK PG COLLEGE - PYQ Portal. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const signInForm = document.getElementById('signInForm');
+            const passwordInput = document.getElementById('password');
+            const togglePassword = document.getElementById('togglePassword');
+
+            signInForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const email = document.getElementById('email').value.trim();
+                const password = passwordInput.value.trim();
+
+                // Basic validation
+                if (!email) {
+                    alert("Please enter your email.");
+                    return;
+                }
+                if (!password) {
+                    alert("Please enter your password.");
+                    return;
+                }
+
+                // Success message
+                alert(`Welcome back!`);
+
+                // Reset the form
+                signInForm.reset();
+            });
+
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? '👁️' : '🙈'; // Change icon
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px; /* Added padding for mobile friendliness */
+        }
+
+        .container {
+            background-color: lightblue;
+            border: 2px solid darkblue;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 50px; /* Space from the top */
+            width: 100%; /* Full width for better responsiveness */
+            max-width: 400px;
+            animation: fadeIn 1s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px; /* Space between container and footer */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: calc(100% - 40px); /* Adjust width for eye icon */
+            padding: 10px;
+            border: 2px solid darkblue;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        input:focus, select:focus {
+            border-color: #007BFF;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .eye-icon {
+            display: inline-block;
+            cursor: pointer;
+            margin-left: -35px; /* Adjust position */
+            margin-top: 12px; /* Center with the input */
+            position: relative;
+        }
+
+        .btn {
+            background-color: darkblue;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            width: 100%;
+            background-color: darkblue;
+            color: white;
+            text-align: center;
+            padding: 20px 0; /* Adjust footer padding */
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .password-requirements {
+            font-size: 12px;
+            color: gray;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Account</h1>
+        <form id="accountForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="course">Course:</label>
+                <select id="course" required>
+                    <option value="">Select Course</option>
+                    <option value="BBA">BBA</option>
+                    <option value="BCA">BCA</option>
+                    <option value="BCOM">BCOM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="crNo">CR No:</label>
+                <input type="text" id="crNo" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email ID:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div style="position: relative;">
+                    <input type="password" id="password" required>
+                    <span class="eye-icon" id="togglePassword">👁️</span>
+                </div>
+                <div class="password-requirements">
+                    Password must be at least 8 characters long, contain uppercase and lowercase letters, numbers, and special characters.
+                </div>
+                <div class="password-strength" id="passwordStrength"></div>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 MLK PG COLLEGE - PYQ Portal. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const accountForm = document.getElementById('accountForm');
+            const passwordInput = document.getElementById('password');
+            const passwordStrength = document.getElementById('passwordStrength');
+            const togglePassword = document.getElementById('togglePassword');
+
+            accountForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('name').value.trim();
+                const course = document.getElementById('course').value;
+                const crNo = document.getElementById('crNo').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = passwordInput.value.trim();
+
+                // Validation
+                if (!name) {
+                    alert("Please enter your name.");
+                    return;
+                }
+                if (!course) {
+                    alert("Please select a course.");
+                    return;
+                }
+                if (!crNo) {
+                    alert("Please enter your CR No.");
+                    return;
+                }
+                if (!email) {
+                    alert("Please enter your email.");
+                    return;
+                }
+                if (!validateEmail(email)) {
+                    alert("Please enter a valid email address.");
+                    return;
+                }
+                if (!validatePassword(password)) {
+                    alert("Password must be at least 8 characters long, contain uppercase and lowercase letters, numbers, and special characters.");
+                    return;
+                }
+
+                // Success message
+                alert(`Your form has been filled successfully. Thank you, ${name}!`);
+
+                // Reset the form
+                accountForm.reset();
+                passwordStrength.textContent = '';
+            });
+
+            passwordInput.addEventListener('input', function() {
+                const password = passwordInput.value;
+                const strength = getPasswordStrength(password);
+                passwordStrength.textContent = strength.message;
+                passwordStrength.style.color = strength.color;
+            });
+
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? '👁️' : '🙈'; // Change icon
+            });
+
+            function validateEmail(email) {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email);
+            }
+
+            function validatePassword(password) {
+                return password.length >= 8 &&
+                    /[A-Z]/.test(password) &&
+                    /[a-z]/.test(password) &&
+                    /[0-9]/.test(password) &&
+                    /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            }
+
+            function getPasswordStrength(password) {
+                if (password.length < 8) {
+                    return { message: 'Weak Password', color: 'red' };
+                }
+                const hasUpper = /[A-Z]/.test(password);
+                const hasLower = /[a-z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+                if (hasUpper && hasLower && hasNumber && hasSpecial) {
+                    return { message: 'Strong Password', color: 'green' };
+                } else {
+                    return { message: 'Moderate Password', color: 'orange' };
+                }
+            }
+        });
+    </script>
+</body>
+</html>

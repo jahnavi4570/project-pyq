@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBA Year Blocks</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            background-color: white;
+            font-family: Arial, sans-serif;
+            padding-top: 50px; /* Space from the top */
+        }
+
+        .container {
+            border: 3px solid rgb(39, 39, 92);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s;
+            width: 95%; /* Changed to a percentage for responsiveness */
+            max-width: 800px;
+            margin-bottom: 50px; /* Space for footer */
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            width: 95%; /* Adjusted for responsiveness */
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid darkblue;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .blocks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .block {
+            background-color: lightblue;
+            border: 2px solid black;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid darkblue;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        footer {
+            width: 100%;
+            background-color: darkblue;
+            color: white;
+            text-align: center;
+            padding: 40px 0; /* Adjusted padding */
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterBlocks()">
+        </div>
+        <div class="blocks" id="blocksContainer">
+            <div class="block">
+                BBA 1st Year 2022-23
+                <select>
+                    <option value="">Select Semester</option>
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                </select>
+            </div>
+            <div class="block">
+                BBA 1st Year 2023-24
+                <select>
+                    <option value="">Select Semester</option>
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                </select>
+            </div>
+            <div class="block">
+                BBA 1st Year 2024-25
+                <select>
+                    <option value="">Select Semester</option>
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                </select>
+            </div>
+            <div class="block">
+                BBA 2nd Year 2022-23
+                <select>
+                    <option value="">Select Semester</option>
+                    <option value="3">Semester 3</option>
+                    <option value="4">Semester 4</option>
+                </select>
+            </div>
+            <div class="block">
+                BBA 2nd Year 2023-24
+                <select>
+                    <option value="">Select Semester</option>
+                    <option value="3">Semester 3</option>
+                    <option value="4">Semester 4</option>
+                </select>
+            </div>
+            <div class="block">
+                BBA 2nd Year 2024-25
+                <select>
+                    <option value="">Select Semester</option>
+                    <option value="3">Semester 3</option>
+                    <option value="4">Semester 4</option>
+                </select>
+            </div>
+            <div class="block">
+                BBA 3rd Year 2022-23
+                <select>
+                    <option value="">Select Semester</option>
+                    <option value="5">Semester 5</option>
+                    <option value="6">Semester 6</option>
+                </select>
+            </div>
+            <div class="block">
+                BBA 3rd Year 2023-24
+                <select>
+                    <option value="">Select Semester</option>
+                    <option value="5">Semester 5</option>
+                    <option value="6">Semester 6</option>
+                </select>
+            </div>
+            <div class="block">
+                BBA 3rd Year 2024-25
+                <select>
+                    <option value="">Select Semester</option>
+                    <option value="5">Semester 5</option>
+                    <option value="6">Semester 6</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 MLK PG COLLEGE - PYQ Portal. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function filterBlocks() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const blocks = document.querySelectorAll('.block');
+
+            blocks.forEach(block => {
+                if (block.textContent.toLowerCase().includes(filter)) {
+                    block.style.display = "block";
+                } else {
+                    block.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
